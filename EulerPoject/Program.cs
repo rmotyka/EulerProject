@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using EulerPoject;
+
+var problem14 = new Problem14();
+problem14.Calculate();
