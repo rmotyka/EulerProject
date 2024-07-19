@@ -1,4 +1,4 @@
 ﻿using EulerPoject;
 
-var problem19 = new Problem19();
-problem19.Calculate();
+var problem20 = new Problem20();
+problem20.Calculate();
