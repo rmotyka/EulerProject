@@ -14,10 +14,11 @@ namespace EulerPoject
 
         public void Calculate()
         {
-            Factorial(10);
+            var result = Factorial(100);
+            Console.WriteLine(result.Sum());
         }
 
-        private string Factorial(int n)
+        private int[] Factorial(int n)
         {
             var res = new int[MAX];
 
@@ -29,13 +30,10 @@ namespace EulerPoject
                 res_size = Multiply(x, res, res_size);
             }
 
-            //return string.Join("", res)
+            Array.Reverse(res, 0, res_size);
 
-            //cout << "Factorial of given number is \n";
-            //for (int i = res_size - 1; i >= 0; i--)
-            //    cout << res[i];
-
-            return "";
+            return res.AsSpan(0, res_size).ToArray();
+            //return res.Take(res_size).Aggregate("", (a, i) => a + i);
         }
 
         private int Multiply(int x, int[] res, int res_size)
