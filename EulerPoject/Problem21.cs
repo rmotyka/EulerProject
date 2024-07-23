@@ -27,7 +27,7 @@ namespace EulerPoject
             Console.WriteLine($"Amicable sum: {amicableSum}");
         }
 
-        private int GetDivisorsSum(int number)
+        public int GetDivisorsSum(int number)
         {
             // Final result of summation of divisors
             int result = 0;
