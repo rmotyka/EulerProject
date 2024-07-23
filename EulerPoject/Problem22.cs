@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace EulerPoject
 {
@@ -11,14 +7,29 @@ namespace EulerPoject
         public void Calculate()
         {
             var names = ReadNamesFile();
+            names.Sort();
 
+            long result = 0;
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                var nameWort = GetNameWorth(names[i]);
+                result += ((i + 1) * nameWort);
+            }
+
+            Console.WriteLine(result);
+        }
+
+        private int GetNameWorth(string nameText)
+        {
+            return Encoding.ASCII.GetBytes(nameText).Sum(x => x - 64);
         }
 
         private List<string> ReadNamesFile()
         {
             var names = new List<string>(60_000);
 
-            using StreamReader sr = new StreamReader("Resources\\Problem22\\0022_names.txt");
+            using StreamReader sr = new("Resources\\Problem22\\0022_names.txt");
             int character;
             var sb = new StringBuilder();
             while((character = sr.Read()) != -1)
@@ -38,6 +49,8 @@ namespace EulerPoject
 
                 sb.Append(c);
             }
+
+            names.Add(sb.ToString());
 
             return names;
         }
