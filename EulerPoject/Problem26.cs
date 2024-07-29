@@ -11,13 +11,61 @@ namespace EulerPoject
     {
         public void Calculate()
         {
-            Divide(1, 6);
+            int longestCycle = 0;
+            int longestDenominator = 0;
+            DivideResult longestResult = new();
+            for (int i = 1; i < 1_000; i++)
+            {
+                var result = Divide(1, i);
+                if (result.CycleStartPosition is not null)
+                {
+                    var currentCycleLength = result.Decimals.Count - result.CycleStartPosition.Value;
+                    if (longestCycle < currentCycleLength)
+                    {
+                        longestDenominator = i;
+                        longestCycle = currentCycleLength;
+                        longestResult = result;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Longest cycle for {longestDenominator}");
+            Console.WriteLine(longestResult.ToString());
         }
 
-        public void Divide(int numerator, int denominator)
+        public struct DivideResult
         {
-            Dictionary<int, int> remainderPositions = new Dictionary<int, int>();
-            List<int> decimals = new List<int>();
+            public int Quotient;
+            public List<int> Decimals;
+            public int? CycleStartPosition;
+
+            public override string ToString()
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine("Quotient: " + Quotient);
+                sb.Append("Decimals: 0.");
+                foreach (int digit in Decimals)
+                {
+                    sb.Append(digit);
+                }
+                sb.AppendLine();
+                if (CycleStartPosition is not null)
+                {
+                    sb.AppendLine("Cycle starts at position: " + CycleStartPosition);
+                }
+                else
+                {
+                    sb.AppendLine("No repeating cycle.");
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public DivideResult Divide(int numerator, int denominator)
+        {
+            Dictionary<int, int> remainderPositions = [];
+            List<int> decimals = [];
 
             int quotient = numerator / denominator;
             int remainder = numerator % denominator;
@@ -30,22 +78,19 @@ namespace EulerPoject
                 remainder %= denominator;
             }
 
-            Console.WriteLine("Quotient: " + quotient);
-            Console.Write("Decimals: 0.");
-            foreach (int digit in decimals)
+            DivideResult divideResult = new DivideResult
             {
-                Console.Write(digit);
-            }
-            Console.WriteLine();
+                Quotient = quotient,
+                Decimals = decimals,
+                CycleStartPosition = null
+            };
 
             if (remainder != 0)
             {
-                Console.WriteLine("Cycle starts at position: " + remainderPositions[remainder]);
+                divideResult.CycleStartPosition = remainderPositions[remainder];
             }
-            else
-            {
-                Console.WriteLine("No repeating cycle.");
-            }
+
+            return divideResult;
         }
     }
 }
