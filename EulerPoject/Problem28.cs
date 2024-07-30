@@ -44,6 +44,13 @@ namespace EulerPoject
                     sum += curentNumber;
                 }
 
+                var rowLenght = incrementator + 1;
+                if (rowLenght == 1001)
+                {
+                    Console.WriteLine(sum);
+                    break;
+                }
+
                 incrementator += 2;
             }
         }
