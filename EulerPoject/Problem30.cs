@@ -8,8 +8,9 @@ namespace EulerPoject
         {
             BigInteger number = 2;
             BigInteger sumOfNumbers = 0;
+            BigInteger upperLimit = 6 * (Pow5(9));
 
-            while(true)
+            while(number <= upperLimit)
             {
                 var digits = GetDigits(number);
                 BigInteger sum = 0;
